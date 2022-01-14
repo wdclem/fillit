@@ -6,14 +6,14 @@
 #    By: thule <thule@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 17:42:19 by thule             #+#    #+#              #
-#    Updated: 2022/01/12 18:05:44 by thule            ###   ########.fr        #
+#    Updated: 2022/01/14 15:05:36 by ccariou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror #temp removed from first rule
 NAME = fillit
-FILES = main.c check_tetriminos.c
+FILES = main.c get_next_line.c 
 OBJS = *.o
 
 .PHONY: all $(NAME) clean fclean re
@@ -22,7 +22,7 @@ OBJS = *.o
 all: $(NAME)
 
 $(NAME):
-	$(CC) -o $(NAME) $(FILES)
+	$(CC) -o $(NAME) $(FILES) -Ilibft -Llibft -lft
 
 clean:
 	/bin/rm -f $(OBJS)

@@ -6,88 +6,105 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 12:35:21 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:40:53 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> //rmb to delete
 #include "fillit.h"
 
-char	*map;
+#define NORMAL "\x1B[0m"
+#define RED "\x1B[31m"
+#define GREEN "\x1B[32m"
+#define YELLOW "\x1B[33m"
+#define BLUE "\x1B[34m"
+#define MAGENTA "\x1B[35m"
+#define CYAN "\x1B[36m"
+#define WHITE "\x1B[37m"
 
-void	print;
-int	checker(int fd, struct tetris)
+int check_valid_board(int fd)
 {
-	int error;
-	int
-int	main(int argc, char *argv[])
-{
-	/* two variables to open file, might not need line */
-	char	*tetri[26];
-	int		tetri_count;
-	int		fd;
-	struct tetri;/* to be made, use number of tetri, len, position */
-	//char	*testfile;
+	char buf[547];
+    int ret;
+    int index;
+    int shape;
 
-	/* Check for only one file, switch printf to putstr */
-	if (argc == 2)
-	{
-		fd = open (argv[1], O_RDONLY);
-		if (fd > 0)
-		{
-			read_check(fd);
-
-	}
-	printf("Usage: ./.fillit filename\n");
+    index = 0;
+    ret = read(fd, buf, 546);
+    printf("%d", ret);
+    if (ret < 19 || ret > 545 || ((ret - 1) % 21 != 18))
+        return (0);
+    shape = 0;
+    buf[ret] = '\0';
+    while (buf[index] != '\0')
+    {
+        if (buf[index] == '#' || buf[index] == '.' || buf[index] == '\n')
+        {
+            if ((index - shape) % 5 == 4 && buf[index] != '\n')
+                return (0);
+            if (index % 21 == 20)
+            {
+                if (buf[index] != '\n')
+                    return (0);
+                shape++;
+            }
+        }
+        else
+            return (0);
+        index++;
+    }
+    return (shape + 1);
 }
 
-int	file_check(char *buf)
+int check_pieces(int fd, char *test)
 {
-	int	index;
-	int	j;
+	char    *line;
+	char    *tetri[4];
+	int     index; // navigate in the array
+	int		jndex; // navigate between pieces
+	int		tetri_numb;
 
-	while(*buf)
-	{
-		if (*buf != '#' && *buf != '.' && *buf != '\n' && != '\0')
-			return (0);
-
-	}
-}
-int	read_check(int fd)
-{
-	char	*buf;
-	int		bytes;
-	
-	buf = (char *)malloc(545);
-	bytes  = read(fd, buf, 544);
-	while (bytes > 0)
-	{
-		buf[bytes] = '\0';
-		bytes = read(fd, buf, 544)
-	}
-	if (file_check == 0)
-		return (0); 
-	free(str);
-	close(fd);
-	return (something);
-
-/* one piece is = 21 char (5 per lines et one extra \n) */
-int	valid(int fd, char [26], char	*file)
-{
-	int	index;
-	char	*line;
-	char	*tetri[4];
 	index = 0;
-
-	while (index < 4)
+	jndex = 0;
+	line = NULL;
+	tetri_numb = check_valid_board(fd);
+	fd = open(test, O_RDONLY);
+	while (jndex < tetri_numb)
 	{
-		get_next_line(fd, &line);
-		tetri[index++] = line;
+		printf("%d\n", tetri_numb);
+		while (index < 4)
+		{
+			get_next_line(fd, &line);
+			printf("%s \n", line);
+			tetri[index++] = line;
+			printf("%s \n", tetri[index]);
+		}
+		printf("%s \n", tetri[index]); 
+		jndex ++;
 	}
+	return (1);
+}  
 
-####
-....
-....
-....
+int main(int argc, char *argv[])
+{
+	int fd;
 
+	if (argc != 2)
+	{
+		ft_putstr("usage: ./fillit filename\n");
+		return (0);
+	}
+	fd = open(argv[1], O_RDONLY);
+	check_pieces(fd, argv[1]);
 
+	close(fd);
+
+	// char *buf = "....\n##..\n.#..\n.#..";
+
+	// if (*buf != '#' && *buf != '.' && *buf != '\n' && *buf != '\0')
+	// 	printf("yes");
+	// else
+	// 	printf("no");
+
+	return (0);
+}

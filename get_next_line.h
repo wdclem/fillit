@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 17:42:28 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 15:03:42 by ccariou          ###   ########.fr       */
+/*   Created: 2021/12/07 11:11:54 by ccariou           #+#    #+#             */
+/*   Updated: 2022/01/07 12:48:55 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#ifndef FILLIT_H
-# define FILLIT_H
+# define BUFF_SIZE 1000
+# define FD_SIZE 4096
 
-# include <fcntl.h>
 # include "libft/libft.h"
-# include "get_next_line.h"
 
-typedef struct tetris
-{
-	char	**position;
-	int		width;
-	int		height;
-	char	value;
-}		t_tetris;
-
+int	get_next_line(const int fd, char **line);
 
 #endif
