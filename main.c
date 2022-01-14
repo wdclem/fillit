@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/12 18:08:25 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/14 10:40:32 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 int	main(int argc, char *argv[])
 {
-	printf("got c");
+	if (argc != 2)
+	{
+		ft_putstr("usage: ./fillit input_file\n");
+	}
+	
 	return (0);
 }
