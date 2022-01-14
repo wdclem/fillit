@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 14:33:07 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/14 14:53:59 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,24 @@ int check_valid_board(int fd)
 
 	index = 0;
 	ret = read(fd, buf, 545);
-	if (ret > 544 || ((ret - 1) % 21 != 18))
+	printf("%d", ret);
+	if (ret < 19 || ret > 544 || ((ret - 1) % 21 != 18))
 		return (0);
-	shape = (ret + 2) / 21;
+	// shape = (ret + 2) / 21;
+	shape = 0;
+	buf[ret] = '\0';
 	while (buf[index] != '\0')
 	{
 		if (buf[index] == '#' || buf[index] == '.' || buf[index] == '\n')
 		{
-			if ()
-			// check inside;
+			if ((index - shape) % 5 == 4 && buf[index] != '\n')
+				return (0);
+			if (index % 21 == 20 && buf[index] == '\n')
+			{
+				if (buf[index] != '\n')
+					return (0);
+				shape++;
+			}
 			if (buf[index] == '\n')
 			{
 				printf("%s%d%s	", GREEN, index, WHITE);
@@ -53,7 +62,6 @@ int check_valid_board(int fd)
 			return (0);
 		index++; 
 	}
-
 	return (1);
 }
 
@@ -67,7 +75,8 @@ int main(int argc, char *argv[])
 		return (0);
 	}
 	fd = open(argv[1], O_RDONLY);
-	check_valid_board(fd);
+	int res = check_valid_board(fd);
+	printf("\nresult is %d\n", res);
 
 	close(fd);
 
