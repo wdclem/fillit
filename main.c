@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 14:53:59 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/14 15:33:01 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,16 @@
 
 int check_valid_board(int fd)
 {
-	// possible max 544;
-	char buf[546];
+	char buf[547];
 	int ret;
 	int index;
 	int shape;
 
 	index = 0;
-	ret = read(fd, buf, 545);
+	ret = read(fd, buf, 546);
 	printf("%d", ret);
-	if (ret < 19 || ret > 544 || ((ret - 1) % 21 != 18))
+	if (ret < 19 || ret > 545 || ((ret - 1) % 21 != 18))
 		return (0);
-	// shape = (ret + 2) / 21;
 	shape = 0;
 	buf[ret] = '\0';
 	while (buf[index] != '\0')
@@ -44,25 +42,18 @@ int check_valid_board(int fd)
 		{
 			if ((index - shape) % 5 == 4 && buf[index] != '\n')
 				return (0);
-			if (index % 21 == 20 && buf[index] == '\n')
+			if (index % 21 == 20)
 			{
 				if (buf[index] != '\n')
 					return (0);
 				shape++;
 			}
-			if (buf[index] == '\n')
-			{
-				printf("%s%d%s	", GREEN, index, WHITE);
-				printf("\n");
-			}
-			else
-				printf("%d	", index);
 		}
 		else
 			return (0);
 		index++; 
 	}
-	return (1);
+	return (shape + 1);
 }
 
 int main(int argc, char *argv[])
@@ -80,12 +71,6 @@ int main(int argc, char *argv[])
 
 	close(fd);
 
-	// char *buf = "....\n##..\n.#..\n.#..";
-
-	// if (*buf != '#' && *buf != '.' && *buf != '\n' && *buf != '\0')
-	// 	printf("yes");
-	// else
-	// 	printf("no");
 
 	return (0);
 }
