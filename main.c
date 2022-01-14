@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 12:30:45 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/14 12:41:46 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,28 @@ int	check_valid_board(int fd)
 {
 	// possible max 544;
 	char buf[546];
-	int ret = read(fd, buf, 545);
+	int ret;
+	int index;
+	int shape;
+	
+	index = 0;
+	ret = read(fd, buf, 545);
 	if (ret > 544)
 		return (0);
-	int shape = (ret + 2) / 21;
-	printf("%d", shape);
+	shape = (ret + 2) / 21;
+	
+	while (*buf != '\0')
+	{
+		if (*buf == '#' || *buf == '.' || *buf == '\n')
+		{
+			//check inside;
+		}
+		else
+		{
+			// invalid if its not # or . or \n
+			return (0);
+		}
+	}
 
 	return (1);
 }
