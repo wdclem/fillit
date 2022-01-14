@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/13 19:21:13 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/14 12:35:21 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,71 @@ int	checker(int fd, struct tetris)
 int	main(int argc, char *argv[])
 {
 	/* two variables to open file, might not need line */
-	struct tetri /* to be made, use number of tetri, len, position */
+	char	*tetri[26];
+	int		tetri_count;
+	int		fd;
+	struct tetri;/* to be made, use number of tetri, len, position */
 	//char	*testfile;
 
 	/* Check for only one file, switch printf to putstr */
-	if (argc != 2)
+	if (argc == 2)
 	{
-		printf("Usage only with one arg\n");
-		return (1);
-	}
-	read(argv[1]);
-}
-struct	*read(char *testfile)
-{
-	/* might be smarter to put all in a buffer, since its gonna be small files ? */
-	char	buffer[maxsize];
-	int		fd;
-	int		bytes
+		fd = open (argv[1], O_RDONLY);
+		if (fd > 0)
+		{
+			read_check(fd);
 
-	fd = open (argv[1], O_RDONLY);
-	if (fd == -1 || read(fd,buf, 1) == 0)
-	{
-		printf("error pas content\n");
-		return (1)
 	}
-	bytes = read(fd, buffer, MAXSIZE);
-	close(fd);
-
-	if (!valid(buffer, bytes))
-		return (1);\
-	return(create list);
+	printf("Usage: ./.fillit filename\n");
 }
-/* one piece is = 21 char (5 per lines et one extra \n) */
-int	valid(char *buffer, int bytes)
+
+int	file_check(char *buf)
 {
 	int	index;
+	int	j;
 
+	while(*buf)
+	{
+		if (*buf != '#' && *buf != '.' && *buf != '\n' && != '\0')
+			return (0);
+
+	}
+}
+int	read_check(int fd)
+{
+	char	*buf;
+	int		bytes;
+	
+	buf = (char *)malloc(545);
+	bytes  = read(fd, buf, 544);
+	while (bytes > 0)
+	{
+		buf[bytes] = '\0';
+		bytes = read(fd, buf, 544)
+	}
+	if (file_check == 0)
+		return (0); 
+	free(str);
+	close(fd);
+	return (something);
+
+/* one piece is = 21 char (5 per lines et one extra \n) */
+int	valid(int fd, char [26], char	*file)
+{
+	int	index;
+	char	*line;
+	char	*tetri[4];
 	index = 0;
 
-	while (index <= bytes)
+	while (index < 4)
 	{
+		get_next_line(fd, &line);
+		tetri[index++] = line;
+	}
+
+####
+....
+....
+....
 
 
