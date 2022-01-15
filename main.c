@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 15:33:01 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/14 15:46:59 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,25 @@ int check_valid_board(int fd)
 
 	index = 0;
 	ret = read(fd, buf, 546);
-	printf("%d", ret);
-	if (ret < 19 || ret > 545 || ((ret - 1) % 21 != 18))
-		return (0);
+	// printf("%d", ret);
+	// printf("%d", ret);
+	// if (ret < 19 || ret > 545 || ((ret - 1) % 21 != 18))
+	// 	return (0);
 	shape = 0;
 	buf[ret] = '\0';
 	while (buf[index] != '\0')
 	{
 		if (buf[index] == '#' || buf[index] == '.' || buf[index] == '\n')
 		{
+			
+			if (buf[index] == '\n')
+			{
+				printf("%s%d%s", GREEN, index, WHITE);
+				printf("\n");
+			}
+			else
+				printf("%d	", index);
+			
 			if ((index - shape) % 5 == 4 && buf[index] != '\n')
 				return (0);
 			if (index % 21 == 20)
@@ -67,7 +77,7 @@ int main(int argc, char *argv[])
 	}
 	fd = open(argv[1], O_RDONLY);
 	int res = check_valid_board(fd);
-	printf("\nresult is %d\n", res);
+	// printf("\nresult is %d\n", res);
 
 	close(fd);
 

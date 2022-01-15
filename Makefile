@@ -6,7 +6,7 @@
 #    By: thule <thule@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 17:42:19 by thule             #+#    #+#              #
-#    Updated: 2022/01/12 18:05:44 by thule            ###   ########.fr        #
+#    Updated: 2022/01/14 10:58:03 by thule            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS = *.o
 all: $(NAME)
 
 $(NAME):
-	$(CC) -o $(NAME) $(FILES)
+	$(CC) -o $(NAME) $(FILES) -Ilibft -Llibft -lft
 
 clean:
 	/bin/rm -f $(OBJS)
