@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/17 14:44:08 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/18 11:10:56 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,24 @@
 
 int	*check_piece(char **arr)
 {
+	// printf("%c %c %c %c\n", arr[0][0], arr[1][0], arr[2][0], arr[3][0]);
+	// printf("%c %c %c %c\n", arr[0][1], arr[1][1], arr[2][1], arr[3][1]);
+	// printf("%c %c %c %c\n", arr[0][2], arr[1][2], arr[2][2], arr[3][2]);
+	// printf("%c %c %c %c\n\n", arr[0][3], arr[1][3], arr[2][3], arr[3][3]);
+	
+	// printf("%s\n%s\n%s\n%s\n", arr[0], arr[1], arr[2], arr[3]);
+	// printf("%zu", ft_strlen(arr[0]));
+	// printf("%c\n", arr[1][3]);
 	int x = 0;
 	int y = 0;
 	int xmin = 3;
 	int ymin = 3;
 	int counter = 0;
 	int index = 0;
-	int *shape = (int *) malloc (sizeof(int) * 4);
-	
+	int *shape = (int *) malloc (sizeof(int) * 8);
+
+	x = 0;
+	y = 0;
 	while (x < 4)
 	{
 		y = 0;
@@ -51,14 +61,26 @@ int	*check_piece(char **arr)
 					counter++;
 				if (y != 3 && arr[x][y + 1] == '#')
 					counter++;
-				shape[index++] = x;
-				shape[index++] = y;
+				shape[index] = x;
+				index++;
+				shape[index] = y;
+				index++;
 			}
 			y++;
 		}
 		x++;
 	}
-	index = 0;
+	// index = 0;
+	// printf("minx: %d\nminy: %d\n", xmin, ymin);
+	// printf("%d ", shape[0]);
+	// printf("%d,", shape[1]);
+	// printf(" %d ", shape[2]);
+	// printf("%d,", shape[3]);
+	// printf(" %d ", shape[4]);
+	// printf("%d,", shape[5]);
+	// printf(" %d ", shape[6]);
+	// printf("%d", shape[7]);
+	// printf("\n");
 	printf("%d %d\n", xmin, ymin);
 	while (index < 8)
 	{
@@ -68,35 +90,56 @@ int	*check_piece(char **arr)
 			shape[index] = shape[index] - ymin;
 		index++;
 	}
-	printf("%d ", shape[0]);
-	printf("%d,", shape[1]);
-	printf(" %d ", shape[2]);
-	printf("%d,", shape[3]);
-	printf(" %d ", shape[4]);
-	printf("%d,", shape[5]);
-	printf(" %d ", shape[6]);
-	printf("%d", shape[7]);
-	return NULL;
+	// printf("%d ", shape[0]);
+	// printf("%d,", shape[1]);
+	// printf(" %d ", shape[2]);
+	// printf("%d,", shape[3]);
+	// printf(" %d ", shape[4]);
+	// printf("%d,", shape[5]);
+	// printf(" %d ", shape[6]);
+	// printf("%d", shape[7]);
+	// printf("\n\n");
+	return shape;
 }
 
 int	make_piece(int fd, int shapes)
 {
+	int *array[26];
 	char buf[22];
-	read(fd, buf, 21);
-	buf[21] = '\0';
-	char **arr = ft_strsplit(buf, '\n');
-	printf("%s\n", arr[0]);
-	printf("%s\n", arr[1]);
-	printf("%s\n", arr[2]);
-	printf("%s\n", arr[3]);
-	check_piece(arr);
+	char **arr;
+	int index = 0;
 	
-	//free malloc afterward
-	ft_strdel(&arr[0]);
-	ft_strdel(&arr[1]);
-	ft_strdel(&arr[2]);
-	ft_strdel(&arr[3]);
-	ft_strdel(arr);
+	int	res = 1;
+	while (res && index < 26)
+	{
+		if (*buf)
+			ft_bzero(buf, 22);
+		res = read(fd, buf, 21);
+		if (res < 20)
+			break;
+		buf[res] = '\0';
+		arr = ft_strsplit(buf, '\n');
+		array[index] = check_piece(arr);
+		ft_strdel(&arr[0]);
+		ft_strdel(&arr[1]);
+		ft_strdel(&arr[2]);
+		ft_strdel(&arr[3]);
+		ft_strdel(arr);
+		index++;
+	}
+	int x = 0;
+	int y = 0;
+	while (x < 8)
+	{
+		y = 0;
+		while (y < 8)
+		{
+			printf("%d ", array[x][y]);
+			y++;
+		}
+		x++;
+		printf ("\n");
+	}
 
 	return (0);
 }
