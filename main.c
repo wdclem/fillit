@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/18 11:10:56 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/18 21:11:25 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,37 @@
 #define CYAN "\x1B[36m"
 #define WHITE "\x1B[37m"
 
+int	place_on_board(char **board, int *shape, int x, int y, char c)
+{
+	//RETURN 0 IF CANT PLACE
+	//RETURN 1 IF PLACE SUCCESSFULLY
+	//max = ft_strlen(*board) - (x or y + 1)
+	//apply onto a new array? 
+	int index;
+	int pos_x;
+	int pos_y;
+
+	index = 0;
+	pos_x = 0;
+	pos_y = 0;
+	while (index < 8)
+	{
+		pos_x = shape[index] + x;
+		index++;
+		pos_y = shape[index] + y;
+		index++;
+		board[pos_x][pos_y] = c;
+	}
+	while (*board)
+	{
+		printf("%s\n", *board);
+		board++;
+	}
+	return (1);
+}
+
 int	*check_piece(char **arr)
 {
-	// printf("%c %c %c %c\n", arr[0][0], arr[1][0], arr[2][0], arr[3][0]);
-	// printf("%c %c %c %c\n", arr[0][1], arr[1][1], arr[2][1], arr[3][1]);
-	// printf("%c %c %c %c\n", arr[0][2], arr[1][2], arr[2][2], arr[3][2]);
-	// printf("%c %c %c %c\n\n", arr[0][3], arr[1][3], arr[2][3], arr[3][3]);
-	
-	// printf("%s\n%s\n%s\n%s\n", arr[0], arr[1], arr[2], arr[3]);
-	// printf("%zu", ft_strlen(arr[0]));
-	// printf("%c\n", arr[1][3]);
 	int x = 0;
 	int y = 0;
 	int xmin = 3;
@@ -70,18 +91,7 @@ int	*check_piece(char **arr)
 		}
 		x++;
 	}
-	// index = 0;
-	// printf("minx: %d\nminy: %d\n", xmin, ymin);
-	// printf("%d ", shape[0]);
-	// printf("%d,", shape[1]);
-	// printf(" %d ", shape[2]);
-	// printf("%d,", shape[3]);
-	// printf(" %d ", shape[4]);
-	// printf("%d,", shape[5]);
-	// printf(" %d ", shape[6]);
-	// printf("%d", shape[7]);
-	// printf("\n");
-	printf("%d %d\n", xmin, ymin);
+	index = 0;
 	while (index < 8)
 	{
 		if (index % 2 == 0)
@@ -90,15 +100,6 @@ int	*check_piece(char **arr)
 			shape[index] = shape[index] - ymin;
 		index++;
 	}
-	// printf("%d ", shape[0]);
-	// printf("%d,", shape[1]);
-	// printf(" %d ", shape[2]);
-	// printf("%d,", shape[3]);
-	// printf(" %d ", shape[4]);
-	// printf("%d,", shape[5]);
-	// printf(" %d ", shape[6]);
-	// printf("%d", shape[7]);
-	// printf("\n\n");
 	return shape;
 }
 
@@ -129,7 +130,7 @@ int	make_piece(int fd, int shapes)
 	}
 	int x = 0;
 	int y = 0;
-	while (x < 8)
+	while (x < 4)
 	{
 		y = 0;
 		while (y < 8)
@@ -140,7 +141,6 @@ int	make_piece(int fd, int shapes)
 		x++;
 		printf ("\n");
 	}
-
 	return (0);
 }
 
@@ -176,21 +176,32 @@ int	check_valid_board(int fd)
 
 int main(int argc, char *argv[])
 {
-	int fd;
-	int shapes;
+	// int fd;
+	// int shapes;
 
-	if (argc != 2)
-	{
-		ft_putstr("usage: ./fillit filename\n");
-		return (0);
-	}
-	fd = open(argv[1], O_RDONLY);
-	shapes = check_valid_board(fd);
-	close(fd);
-	if (!shapes)
-		return (0);
-	fd = open(argv[1], O_RDONLY);
-	make_piece(fd, shapes);
+	// if (argc != 2)
+	// {
+	// 	ft_putstr("usage: ./fillit filename\n");
+	// 	return (0);
+	// }
+	// fd = open(argv[1], O_RDONLY);
+	// shapes = check_valid_board(fd);
+	// close(fd);
+	// if (!shapes)
+	// 	return (0);
+	// fd = open(argv[1], O_RDONLY);
+	// make_piece(fd, shapes);
+
+	char **board;
+	int shape[8] = {0, 0, 0, 1, 1, 0, 2, 0};
+	board = (char **) malloc(sizeof(char *) * (6));
+	board[0] = ft_strdup(".....");
+	board[1] = ft_strdup(".....");
+	board[2] = ft_strdup(".....");
+	board[3] = ft_strdup(".....");
+	board[4] = ft_strdup(".....");
+	board[5] = "\0";
+	place_on_board(board, shape, 2, 0, 'A');
 
 	return (0);
 }
