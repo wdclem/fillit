@@ -6,7 +6,7 @@
 /*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/19 19:42:39 by thle             ###   ########.fr       */
+/*   Updated: 2022/01/19 21:57:40 by thle             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,24 @@
 #define MAGENTA "\x1B[35m"
 #define CYAN "\x1B[36m"
 #define WHITE "\x1B[37m"
+
+void	remove_letter(char **board, char c)
+{
+	int x = 0;
+	int y = 0;
+
+	while (x < ft_strlen(*board))
+	{
+		y = 0;
+		while (y < ft_strlen(*board))
+		{
+			if (board[x][y] == c)
+				board[x][y] = '.';
+			y++;
+		}
+		x++;
+	}
+}
 
 void	remove_from_board(char **board, int *shape, int x, int y, char c)
 {
@@ -64,6 +82,63 @@ int	place_on_board(char **board, int *shape, int x, int y, char c)
 			return (0);
 		}
 		board[pos_x][pos_y] = c;
+	}
+	return (1);
+}
+
+void	draw_board(char **board)
+{
+	int index = 0;
+
+	while (board[index])
+	{
+		printf("%s\n", board[index]);
+		index++;
+	}
+}
+
+int	solver(char **board, int shape[][8], int amount, int index)
+{
+	int x = 0;
+	int y = 0;
+	int res = 0;
+	int go_to = 0;
+	char c;
+	
+	if (index < 0) return 0;
+	while (index < amount)
+	{
+		c = index + 'A';
+		go_to = 0;
+		x = 0;
+		printf("outtest loop is %d %c\n", index, c);
+		while (x < ft_strlen(*board))
+		{
+			y = 0;
+			while (y < ft_strlen(*board))
+			{
+				res = place_on_board(board, shape[index], x, y, c);
+				printf("%s%d %d %d%s\n", GREEN, index, x, y, WHITE);
+				draw_board(board);
+				if (index == amount - 1 && res)
+					return 1;
+				if (!res && x == 2 && y == 2)
+					return (0);
+				if (res)
+				{
+					if (!solver(board, shape, 2, index + 1))
+					{
+						remove_letter(board, c);
+					}
+				}
+				// printf("%s%d %d %d%s\n", GREEN, index, x, y, WHITE);
+				
+				printf("\n");
+				y++;
+			}
+			x++;
+		}
+		index++;
 	}
 	return (1);
 }
@@ -210,21 +285,24 @@ int main(int argc, char *argv[])
 	// make_piece(fd, shapes);
 
 	char **board;
-	int shape[8] = {0, 0, 0, 1, 1, 0, 2, 0};
-	board = (char **) malloc(sizeof(char *) * (6));
-	board[0] = ft_strdup(".....");
-	board[1] = ft_strdup(".....");
-	board[2] = ft_strdup(".....");
-	board[3] = ft_strdup(".....");
-	board[4] = ft_strdup(".....");
-	board[5] = NULL;
-	int res = place_on_board(board, shape, 2, 3, 'A');
-	while (*board)
-	{
-		printf("%s\n", *board);
-		board++;
-	}
-	printf("%d\n", res);
+	
+	int shape[2][8] = {{0, 0, 0, 1, 1, 0, 1, 1}, {0, 0, 0, 1, 0, 2, 1, 2}};
+	int shape_1[8] = {0, 0, 0, 1, 1, 0, 1, 1};
+	int shape_2[8] = {0, 0, 0, 1, 0, 2, 1, 2};
+	board = (char **) malloc(sizeof(char *) * (4));
+	board[0] = ft_strdup("...");
+	board[1] = ft_strdup("...");
+	board[2] = ft_strdup("...");
+	board[3] = NULL;
+	solver(board, shape, 2, 0);
+	// place_on_board(board, shape[1], 0, 0, 'A');
+	// while(*board)
+	// {
+	// 	printf("%s\n", *board);
+	// 	board++;
+	// }
+	printf("%sIN MAIN%s\n", RED, WHITE);
+	draw_board(board);
 
 	return (0);
 }
