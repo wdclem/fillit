@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/18 21:11:25 by thule            ###   ########.fr       */
+/*   Updated: 2022/01/19 19:42:39 by thle             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@
 #define CYAN "\x1B[36m"
 #define WHITE "\x1B[37m"
 
-int	place_on_board(char **board, int *shape, int x, int y, char c)
+void	remove_from_board(char **board, int *shape, int x, int y, char c)
 {
-	//RETURN 0 IF CANT PLACE
-	//RETURN 1 IF PLACE SUCCESSFULLY
-	//max = ft_strlen(*board) - (x or y + 1)
-	//apply onto a new array? 
-	int index;
-	int pos_x;
-	int pos_y;
+	int	index;
+	int	pos_x;
+	int	pos_y;
 
 	index = 0;
 	pos_x = 0;
@@ -38,15 +34,36 @@ int	place_on_board(char **board, int *shape, int x, int y, char c)
 	while (index < 8)
 	{
 		pos_x = shape[index] + x;
-		index++;
-		pos_y = shape[index] + y;
-		index++;
-		board[pos_x][pos_y] = c;
+		pos_y = shape[index + 1] + y;
+		if (pos_x >= ft_strlen(*board) || pos_y >= ft_strlen(*board) || board[pos_x][pos_y] != c)
+		{
+			break;
+		}
+		board[pos_x][pos_y] = '.';
+		index = index + 2;
 	}
-	while (*board)
+}
+
+int	place_on_board(char **board, int *shape, int x, int y, char c)
+{
+	int	index;
+	int	pos_x;
+	int	pos_y;
+
+	index = 0;
+	pos_x = 0;
+	pos_y = 0;
+	while (index < 8)
 	{
-		printf("%s\n", *board);
-		board++;
+		pos_x = shape[index] + x;
+		pos_y = shape[index + 1] + y;
+		index = index + 2;
+		if (pos_x >= ft_strlen(*board) || pos_y >= ft_strlen(*board) || board[pos_x][pos_y] != '.')
+		{
+			remove_from_board(board, shape, x, y, c);
+			return (0);
+		}
+		board[pos_x][pos_y] = c;
 	}
 	return (1);
 }
@@ -128,19 +145,19 @@ int	make_piece(int fd, int shapes)
 		ft_strdel(arr);
 		index++;
 	}
-	int x = 0;
-	int y = 0;
-	while (x < 4)
-	{
-		y = 0;
-		while (y < 8)
-		{
-			printf("%d ", array[x][y]);
-			y++;
-		}
-		x++;
-		printf ("\n");
-	}
+	// int x = 0;
+	// int y = 0;
+	// while (x < 4)
+	// {
+	// 	y = 0;
+	// 	while (y < 8)
+	// 	{
+	// 		printf("%d ", array[x][y]);
+	// 		y++;
+	// 	}
+	// 	x++;
+	// 	printf ("\n");
+	// }
 	return (0);
 }
 
@@ -200,8 +217,14 @@ int main(int argc, char *argv[])
 	board[2] = ft_strdup(".....");
 	board[3] = ft_strdup(".....");
 	board[4] = ft_strdup(".....");
-	board[5] = "\0";
-	place_on_board(board, shape, 2, 0, 'A');
+	board[5] = NULL;
+	int res = place_on_board(board, shape, 2, 3, 'A');
+	while (*board)
+	{
+		printf("%s\n", *board);
+		board++;
+	}
+	printf("%d\n", res);
 
 	return (0);
 }
