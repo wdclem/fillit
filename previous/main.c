@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 15:40:53 by ccariou          ###   ########.fr       */
+/*   Created: 2022/01/19 09:57:46 by ccariou           #+#    #+#             */
+/*   Updated: 2022/01/19 11:04:31 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,38 @@ int check_valid_board(int fd)
     return (shape + 1);
 }
 
-int check_pieces(int fd, char *test)
+int check_pieces(int fd,char *piece[26],char *argv)
 {
 	char    *line;
 	char    *tetri[4];
 	int     index; // navigate in the array
-	int		jndex; // navigate between pieces
+	int		jndex; //navigate through pieces
 	int		tetri_numb;
 
-	index = 0;
-	jndex = 0;
 	line = NULL;
 	tetri_numb = check_valid_board(fd);
-	fd = open(test, O_RDONLY);
-	while (jndex < tetri_numb)
+	fd = open(argv, O_RDONLY);
+	printf("%d\n", tetri_numb);
+	jndex = 0;
+	while (jndex <= tetri_numb)
 	{
-		printf("%d\n", tetri_numb);
+		index = 0;
 		while (index < 4)
 		{
 			get_next_line(fd, &line);
 			printf("%s \n", line);
 			tetri[index++] = line;
-			printf("%s \n", tetri[index]);
 		}
-		printf("%s \n", tetri[index]); 
-		jndex ++;
+		piece[jndex] = tetri[index];
+		jndex++;
 	}
 	return (1);
 }  
 
 int main(int argc, char *argv[])
 {
-	int fd;
+	char	*piece[26];
+	int 	fd;
 
 	if (argc != 2)
 	{
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 		return (0);
 	}
 	fd = open(argv[1], O_RDONLY);
-	check_pieces(fd, argv[1]);
+	check_pieces(fd, piece, argv[1]);
 
 	close(fd);
 
