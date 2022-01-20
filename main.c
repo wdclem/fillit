@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 09:57:46 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/19 11:04:31 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/20 15:01:42 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,20 @@ int check_pieces(int fd,char *piece[26],char *argv)
 	fd = open(argv, O_RDONLY);
 	printf("%d\n", tetri_numb);
 	jndex = 0;
-	while (jndex <= tetri_numb)
+	while (jndex < tetri_numb)
 	{
 		index = 0;
 		while (index < 4)
 		{
 			get_next_line(fd, &line);
-			printf("%s \n", line);
 			tetri[index++] = line;
 		}
-		piece[jndex] = tetri[index];
+		piece[jndex] = make_tetri(tetri);
 		jndex++;
+		/* get the empty line and delete it
+		 * or check if can jump over */
+		get_next_line(fd, &line);
+		
 	}
 	return (1);
 }  

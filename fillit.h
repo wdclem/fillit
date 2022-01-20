@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:28 by thule             #+#    #+#             */
-/*   Updated: 2022/01/14 15:03:42 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/20 14:51:50 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ typedef struct tetris
 	char	value;
 }		t_tetris;
 
+char	*make_tetri(char **string);
 
 #endif
