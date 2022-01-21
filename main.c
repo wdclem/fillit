@@ -6,7 +6,7 @@
 /*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:23 by thule             #+#    #+#             */
-/*   Updated: 2022/01/19 21:57:40 by thle             ###   ########.fr       */
+/*   Updated: 2022/01/21 20:06:57 by thle             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,70 +22,6 @@
 #define CYAN "\x1B[36m"
 #define WHITE "\x1B[37m"
 
-void	remove_letter(char **board, char c)
-{
-	int x = 0;
-	int y = 0;
-
-	while (x < ft_strlen(*board))
-	{
-		y = 0;
-		while (y < ft_strlen(*board))
-		{
-			if (board[x][y] == c)
-				board[x][y] = '.';
-			y++;
-		}
-		x++;
-	}
-}
-
-void	remove_from_board(char **board, int *shape, int x, int y, char c)
-{
-	int	index;
-	int	pos_x;
-	int	pos_y;
-
-	index = 0;
-	pos_x = 0;
-	pos_y = 0;
-	while (index < 8)
-	{
-		pos_x = shape[index] + x;
-		pos_y = shape[index + 1] + y;
-		if (pos_x >= ft_strlen(*board) || pos_y >= ft_strlen(*board) || board[pos_x][pos_y] != c)
-		{
-			break;
-		}
-		board[pos_x][pos_y] = '.';
-		index = index + 2;
-	}
-}
-
-int	place_on_board(char **board, int *shape, int x, int y, char c)
-{
-	int	index;
-	int	pos_x;
-	int	pos_y;
-
-	index = 0;
-	pos_x = 0;
-	pos_y = 0;
-	while (index < 8)
-	{
-		pos_x = shape[index] + x;
-		pos_y = shape[index + 1] + y;
-		index = index + 2;
-		if (pos_x >= ft_strlen(*board) || pos_y >= ft_strlen(*board) || board[pos_x][pos_y] != '.')
-		{
-			remove_from_board(board, shape, x, y, c);
-			return (0);
-		}
-		board[pos_x][pos_y] = c;
-	}
-	return (1);
-}
-
 void	draw_board(char **board)
 {
 	int index = 0;
@@ -95,52 +31,107 @@ void	draw_board(char **board)
 		printf("%s\n", board[index]);
 		index++;
 	}
+	printf("\n");
 }
+
+void	remove_from_board(char **board, int *shape, int x, int y)
+{
+	int	index;
+
+	index = 0;
+	while (index < 8)
+	{
+		board[shape[index] + x][shape[index + 1] + y] = '.';
+		index = index + 2;
+	}
+}
+
+void	place_on_board(char **board, int *shape, int x, int y, char c)
+{
+	int	index;
+
+	index = 0;
+	while (index < 8)
+	{
+		board[shape[index] + x][shape[index + 1] + y] = c;
+		index = index + 2;
+	}
+}
+
+int	valid_placement(char **board, int *shape, int x, int y)
+{
+	int	index;
+	int	pos_x;
+	int	pos_y;
+
+	index = 0;
+	pos_x = 0;
+	pos_y = 0;
+	while (index < 8)
+	{
+		pos_x = shape[index] + x;
+		pos_y = shape[index + 1] + y;
+		if (pos_x >= ft_strlen(*board) || pos_y >= ft_strlen(*board) || board[pos_x][pos_y] != '.')
+			return (0);
+		index = index + 2;
+	}
+	return (1);
+}
+
+
 
 int	solver(char **board, int shape[][8], int amount, int index)
 {
 	int x = 0;
 	int y = 0;
 	int res = 0;
-	int go_to = 0;
 	char c;
-	
-	if (index < 0) return 0;
+
+	// if (index == amount) exit(0);
+	// printf("%sINDEX IS %d%s\n", MAGENTA, index, WHITE);
+	if (index == amount) 
+		return 1;
 	while (index < amount)
 	{
 		c = index + 'A';
-		go_to = 0;
 		x = 0;
-		printf("outtest loop is %d %c\n", index, c);
+		// printf("%soutter loop is %d %c\n", BLUE, index, c);
+		// draw_board(board);
+		// printf("%s", WHITE);
 		while (x < ft_strlen(*board))
 		{
 			y = 0;
 			while (y < ft_strlen(*board))
 			{
-				res = place_on_board(board, shape[index], x, y, c);
-				printf("%s%d %d %d%s\n", GREEN, index, x, y, WHITE);
-				draw_board(board);
-				if (index == amount - 1 && res)
-					return 1;
-				if (!res && x == 2 && y == 2)
+				int res = valid_placement(board, shape[index], x, y);
+				if (!res && x == ft_strlen(*board) - 1 && y == ft_strlen(*board) - 1)
 					return (0);
+				// printf("%sindex:%d%s %s x:%d y:%d placement:%d%s\n", RED, index, WHITE, YELLOW,x,y,res, WHITE);
 				if (res)
 				{
-					if (!solver(board, shape, 2, index + 1))
+					// draw_board(board);
+					place_on_board(board, shape[index], x, y, c);
+					// draw_board(board);
+					// printf("%sindex:%d x:%d y:%d%s\n", GREEN, index, x, y, WHITE);
+					if (!solver(board, shape, amount, index + 1))
 					{
-						remove_letter(board, c);
+						// printf("removing\n");
+						remove_from_board(board, shape[index], x, y);
 					}
+					else
+						return 1;
+						
 				}
-				// printf("%s%d %d %d%s\n", GREEN, index, x, y, WHITE);
-				
-				printf("\n");
+				// printf("%soutter loop is %d %c\n", BLUE, index, c);
+				// draw_board(board);
+				printf("%s", WHITE);
 				y++;
 			}
 			x++;
 		}
 		index++;
 	}
-	return (1);
+	return (0);
 }
 
 int	*check_piece(char **arr)
@@ -286,23 +277,88 @@ int main(int argc, char *argv[])
 
 	char **board;
 	
-	int shape[2][8] = {{0, 0, 0, 1, 1, 0, 1, 1}, {0, 0, 0, 1, 0, 2, 1, 2}};
-	int shape_1[8] = {0, 0, 0, 1, 1, 0, 1, 1};
-	int shape_2[8] = {0, 0, 0, 1, 0, 2, 1, 2};
-	board = (char **) malloc(sizeof(char *) * (4));
-	board[0] = ft_strdup("...");
-	board[1] = ft_strdup("...");
-	board[2] = ft_strdup("...");
-	board[3] = NULL;
-	solver(board, shape, 2, 0);
-	// place_on_board(board, shape[1], 0, 0, 'A');
-	// while(*board)
-	// {
-	// 	printf("%s\n", *board);
-	// 	board++;
-	// }
-	printf("%sIN MAIN%s\n", RED, WHITE);
+	int shape[8][8] = {{0,0,1,0,2,0,3,0}, {0,0,0,1,0,2,0,3}, {0,0,0,1,0,2,1,2}, {0,1,0,2,1,0,1,1}, {0,0,0,1,1,0,1,1}, {0,0,0,1,1,1,1,2}, {0,0,0,1,1,1,2,1}, {0,0,0,1,0,2,1,1}};
+	board = (char **) malloc(sizeof(char *) * (8));
+	board[0] = ft_strdup("......");
+	board[1] = ft_strdup("......");
+	board[2] = ft_strdup("......");
+	board[3] = ft_strdup("......");
+	board[4] = ft_strdup("......");
+	board[5] = ft_strdup("......");
+	board[6] = NULL;
+	int res = solver(board, shape, 8, 0);
+	printf("%d\n", res);
+	printf("\n%sIN MAIN%s\n", RED, WHITE);
 	draw_board(board);
 
+	//BELOW SHOULD NOT WORK
+	// int shape[8][8] = {{0,0,1,0,2,0,3,0}, {0,0,0,1,0,2,0,3}, {0,0,0,1,0,2,1,2}, {0,1,0,2,1,0,1,1}, {0,0,0,1,1,0,1,1}, {0,0,0,1,1,1,1,2}, {0,0,0,1,1,1,2,1}, {0,0,0,1,0,2,1,1}};
+	// board = (char **) malloc(sizeof(char *) * (5));
+	// board[0] = ft_strdup(".....");
+	// board[1] = ft_strdup(".....");
+	// board[2] = ft_strdup(".....");
+	// board[3] = ft_strdup(".....");
+	// board[4] = ft_strdup(".....");
+	// board[5] = NULL;
+	// int res = solver(board, shape, 8, 0);
+	// printf("%d\n", res);
+	// printf("\n%sIN MAIN%s\n", RED, WHITE);
+	// draw_board(board);
+
+	// int shape[3][8] = {{0,0,0,1,0,2,0,3}, {0,0,0,1,0,2,1,2}, {0,1,0,2,1,0,1,1}};
+	// board = (char **) malloc(sizeof(char *) * 5);
+	// board[0] = ft_strdup("....");
+	// board[1] = ft_strdup("....");
+	// board[2] = ft_strdup("....");
+	// board[3] = ft_strdup("....");
+	// board[4] = NULL;
+	// solver(board, shape, 3, 0);
+	// printf("\n%sIN MAIN%s\n", RED, WHITE);
+	// draw_board(board);
+
+	//BELOW SHOULD NOT WORK
+	// int shape[3][8] = {{0,0,0,1,0,2,0,3}, {0,0,0,1,0,2,1,2}, {0,1,1,1,2,0,2,1}};
+	// board = (char **) malloc(sizeof(char *) * 4);
+	// board[0] = ft_strdup("...");
+	// board[1] = ft_strdup("...");
+	// board[2] = ft_strdup("...");
+	// board[3] = NULL;
+	// int res = solver(board, shape, 3, 0);
+	// printf("%d\n", res);
+	// printf("%sIN MAIN%s\n", RED, WHITE);
+	// draw_board(board);
+	
+
+
+	
+	// int shape[2][8] = {{0, 0, 0, 1, 1, 0, 1, 1}, {0, 0, 0, 1, 0, 2, 1, 2}};
+	// board = (char **) malloc(sizeof(char *) * (4));
+	// board[0] = ft_strdup("...");
+	// board[1] = ft_strdup("...");
+	// board[2] = ft_strdup("...");
+	// board[3] = NULL;
+	// solver(board, shape, 2, 0);
+
+	// int shape[2][8] = {{0, 0, 0, 1, 1, 0, 1, 1}, {0, 0, 0, 1, 0, 2, 1, 2}};
+	// board = (char **) malloc(sizeof(char *) * (4));
+	// board[0] = ft_strdup("...");
+	// board[1] = ft_strdup("...");
+	// board[2] = ft_strdup("...");
+	// board[3] = NULL;
+	// solver(board, shape, 2, 0);
+	// printf("\n%sIN MAIN%s\n", RED, WHITE);
+	// draw_board(board);
+	
+	//BELOW SHOULD NOT WORK
+	// int shape[2][8] = {{0, 0, 0, 1, 1, 0, 1, 1}, {0, 0, 0, 1, 0, 2, 1, 2}};
+	// board = (char **) malloc(sizeof(char *) * (3));
+	// board[0] = ft_strdup("..");
+	// board[1] = ft_strdup("..");
+	// board[2] = NULL;
+	// int res = solver(board, shape, 2, 0);
+	// printf("%d\n", res);
+	// printf("%sIN MAIN%s\n", RED, WHITE);
+	// draw_board(board);
+	
 	return (0);
 }
