@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:38:50 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/20 17:32:38 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/21 13:41:04 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	is_valid(char	*piece)
 	return(1);
 }
 */
-int	*coordinate(char piece)
+int	coordinate(char *piece)
 {
 	int	x;
 	int y;
@@ -44,23 +44,31 @@ int	*coordinate(char piece)
 	int	xndex = 0;
 	int	yndex = 0;
 	int	coord[8];
+	int	count;
 
 	x = 0;
 	y = 0;
 	index = 0;
+	count = 0;
 
-	while (index < 20)
-	{	
-		xndex = index;
-		yndex = index;
-		if (index == "#")
+		while (index < 20)
 		{
-			x = xndex % 5;
-			y = yndex % 4;
-			//coord[x][y] could make a struc be easier ?
+			xndex = index;
+			yndex = index;
+			if (piece[index] == "#")
+			{
+				x = xndex % 5;
+				y = yndex % 4;
+				coord[count] = x;
+				count++;
+				coord[count] = y;
+				count++;
+			}
+			index++;
 		}
-		index++;
-	}
+	printf("%d\n", coord);
+	return(0);
+}
 
 
 char	*make_tetri(char *tetri[4])
@@ -77,7 +85,7 @@ char	*make_tetri(char *tetri[4])
 		piece = ft_strjoin(piece, tetri[index]);
 		index++;
 	}
-
+	coordinate(piece);
 	return (piece);
 }
 /*
