@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:38:50 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/21 13:41:04 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/21 17:09:21 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,45 +36,58 @@ int	is_valid(char	*piece)
 	return(1);
 }
 */
-int	coordinate(char *piece)
+int	*coordinate(char **piece)
 {
 	int	x;
 	int y;
 	int index;
-	int	xndex = 0;
-	int	yndex = 0;
-	int	coord[8];
+	int	xmax = 3;
+	int	ymax = 3;
 	int	count;
+	int	*tetri;
 
 	x = 0;
-	y = 0;
 	index = 0;
 	count = 0;
+	tetri = (int *) malloc (sizeof(int) * 8);
 
-		while (index < 20)
+		while (x < 4)
 		{
-			xndex = index;
-			yndex = index;
-			if (piece[index] == "#")
+			y = 0;
+			while (y < 4)
 			{
-				x = xndex % 5;
-				y = yndex % 4;
-				coord[count] = x;
-				count++;
-				coord[count] = y;
-				count++;
+				if (piece[x][y] == '#')
+				{
+					if (x < xmin)
+						xmin = x;
+					if (y < ymin)
+						ymin = y;
+					tetri[index] = x;
+					index++;
+					tetri[index] = y;
+					index++;
+				}
+				y++;
 			}
-			index++;
+			x++;
 		}
-	printf("%d\n", coord);
-	return(0);
+	index = 0;
+	while (index < 8)
+	{
+		if (index % 2 == 0)
+			tetri[index] = tetri[index] - xmax;
+		else
+			tetri[index] = tetri[index] - ymax;
+		index++;
+	}
+	return (tetri);
 }
 
-
+/*
 char	*make_tetri(char *tetri[4])
 {
-	/* from the 4 str make one of with one piece
-	 * prob need 19 from 0 so 20  */
+	* from the 4 str make one of with one piece
+	 * prob need 19 from 0 so 20  *
 	char	*piece;
 	int		index;
 
@@ -88,6 +101,7 @@ char	*make_tetri(char *tetri[4])
 	coordinate(piece);
 	return (piece);
 }
+*/
 /*
 t_tetri	*create_list(char	*tetri[4])
 {
