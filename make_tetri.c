@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:38:50 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/21 17:09:21 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/25 15:07:07 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	is_valid(char	*piece)
 	return(1);
 }
 */
-int	*coordinate(char **piece)
+void	coordinate(char **piece, int	*tetri)
 {
 	int	x;
 	int y;
@@ -44,12 +44,10 @@ int	*coordinate(char **piece)
 	int	xmax = 3;
 	int	ymax = 3;
 	int	count;
-	int	*tetri;
 
 	x = 0;
 	index = 0;
 	count = 0;
-	tetri = (int *) malloc (sizeof(int) * 8);
 
 		while (x < 4)
 		{
@@ -58,10 +56,10 @@ int	*coordinate(char **piece)
 			{
 				if (piece[x][y] == '#')
 				{
-					if (x < xmin)
-						xmin = x;
-					if (y < ymin)
-						ymin = y;
+					if (x < xmax)
+						xmax = x;
+					if (y < ymax)
+						ymax = y;
 					tetri[index] = x;
 					index++;
 					tetri[index] = y;
@@ -80,7 +78,6 @@ int	*coordinate(char **piece)
 			tetri[index] = tetri[index] - ymax;
 		index++;
 	}
-	return (tetri);
 }
 
 /*
