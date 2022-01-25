@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thule <thule@student.42.fr>                +#+  +:+       +#+         #
+#    By: thle <thle@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 17:42:19 by thule             #+#    #+#              #
-#    Updated: 2022/01/14 10:58:03 by thule            ###   ########.fr        #
+#    Updated: 2022/01/25 15:40:31 by thle             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror #temp removed from first rule
 NAME = fillit
-FILES = main.c check_tetriminos.c
+FILES = main.c check_tetriminos.c helpers.c solver.c
 OBJS = *.o
 
 .PHONY: all $(NAME) clean fclean re
