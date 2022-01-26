@@ -6,14 +6,14 @@
 #    By: thule <thule@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 17:42:19 by thule             #+#    #+#              #
-#    Updated: 2022/01/26 11:46:05 by ccariou          ###   ########.fr        #
+#    Updated: 2022/01/25 12:16:10 by ccariou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror #temp removed from first rule
 NAME = fillit
-FILES = main.c get_next_line.c make_tetri.c check_pieces.c board.c solver.c
+FILES = main.c 
 OBJS = *.o
 
 .PHONY: all $(NAME) clean fclean re
