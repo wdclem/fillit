@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:29:22 by thle              #+#    #+#             */
-/*   Updated: 2022/01/25 15:39:44 by thle             ###   ########.fr       */
+/*   Updated: 2022/01/26 11:56:45 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+//this func needs rewriting since it used printf()
 void	draw_board(char **board)
 {
 	int index = 0;

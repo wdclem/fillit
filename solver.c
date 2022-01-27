@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:38:45 by thle              #+#    #+#             */
-/*   Updated: 2022/01/25 15:48:11 by thle             ###   ########.fr       */
+/*   Updated: 2022/01/27 14:18:33 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	solver(char **board, int shape[][8], int amount, int index)
 	int res = 0;
 	char c;
 
+	if (!board)
+		return (0);
 	if (index == amount) 
 		return 1;
 	while (index < amount)

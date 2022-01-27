@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:28 by thule             #+#    #+#             */
-/*   Updated: 2022/01/25 17:39:58 by thle             ###   ########.fr       */
+/*   Updated: 2022/01/27 14:33:33 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	remove_from_board(char **board, int *shape, int x, int y);
 void	place_on_board(char **board, int *shape, int x, int y, char c);
 int		valid_placement(char **board, int *shape, int x, int y);
 
-int	read_board(int fd);
+int	read_board(int fd, int arr[26][8]);
 int	check_piece(char *piece);
+
+void	delete_board(char ***board);
+char	**generate_board(int dimension);
 
 #endif
