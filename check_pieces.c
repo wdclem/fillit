@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 11:35:09 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/26 16:01:45 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/31 16:43:35 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_pieces(int fd, int count, int tetri[count][8], char *argv)
 	int		index; // navigate in the array
 	int		jndex; //navigate through pieces
 	int		tndex = 0;
-
+/*
 	printf("tetri[0] = %d\n", tetri[0][2]);
 	printf("tetri[1] = %d\n", tetri[1][2]);
 	printf("tetri[2] = %d\n", tetri[2][2]);
@@ -58,7 +58,7 @@ void	check_pieces(int fd, int count, int tetri[count][8], char *argv)
 	printf("tetri[0] = %d\n", tetri[0][2]);
 	printf("tetri[1] = %d\n", tetri[1][2]);
 	printf("tetri[5] = %d\n", tetri[5][2]);
-
+*/
 	line = NULL;
 	fd = open(argv, O_RDONLY);
 	printf("%d\n", count);
@@ -78,6 +78,7 @@ void	check_pieces(int fd, int count, int tetri[count][8], char *argv)
 		jndex++;
 		get_next_line(fd, &line);
 	}
+/*
 	printf("tetri[00] = %d\n", tetri[1][0]);
 	printf("tetri[01] = %d\n", tetri[1][1]);
 	printf("tetri[02] = %d\n", tetri[1][2]);
@@ -86,4 +87,5 @@ void	check_pieces(int fd, int count, int tetri[count][8], char *argv)
 	printf("tetri[05] = %d\n", tetri[1][5]);
 	printf("tetri[06] = %d\n", tetri[1][6]);
 	printf("tetri[07] = %d\n", tetri[1][7]);
+*/
 }  

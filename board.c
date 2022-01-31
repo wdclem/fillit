@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:34:11 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/26 10:35:19 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/31 18:36:36 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	place_on_board(char **board, int *shape, int x, int y, char c)
 	}
 }
 
-int	valid_placement(char **board, int *shape, int x, int y)
+int	valid_placement(char **board, int *shape, int x, int y, int len)
 {
 	int	index;
 	int	pos_x;
@@ -61,7 +61,7 @@ int	valid_placement(char **board, int *shape, int x, int y)
 	{
 		pos_x = shape[index] + x;
 		pos_y = shape[index + 1] + y;
-		if (pos_x >= ft_strlen(*board) || pos_y >= ft_strlen(*board) || board[pos_x][pos_y] != '.')
+		if (pos_x >= len || pos_y >= len || board[pos_x][pos_y] != '.')
 			return (0);
 		index = index + 2;
 	}

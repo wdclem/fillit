@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:38:50 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/26 15:54:30 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/31 09:32:52 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ void	coordinate(char **piece, int	*tetri)
 		index++;
 	}
 }
-

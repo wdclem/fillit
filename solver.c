@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 11:17:02 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/26 12:01:26 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/31 18:40:04 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,23 @@ int	solver(char **board, int tetri[][8], int amount, int index)
 	int res = 0;
 	char c;
 
+	if (!board)
+		return (0);
 	if (index == amount)
 		return 1;
-	printf("ici dans solver\n");
+	int	count = 0; // TBDELETE
 	while (index < amount)
 	{
+		int len = (int)ft_strlen(*board); // TO CLEAN LATER
 		c = index + 'A';
 		x = 0;
-		while (x < ft_strlen(*board))
+		while (x < len)
 		{
 			y = 0;
-			while (y < ft_strlen(*board))
+			while (y < len) 
 			{
-				int res = valid_placement(board, tetri[index], x, y);
-				if (!res && x == ft_strlen(*board) - 1 && y == ft_strlen(*board) - 1)
+				int res = valid_placement(board, tetri[index], x, y, len);
+				if (!res && x == len - 1 && y == len - 1)
 					return (0);
 				if (res)
 				{

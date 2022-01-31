@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:28 by thule             #+#    #+#             */
-/*   Updated: 2022/01/26 15:22:13 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/01/31 18:36:22 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	coordinate(char **piece, int *tetri);
 void	draw_board(char **board);
 void	remove_from_board(char **board, int *tetri, int x, int y);
 void	place_on_board(char **board, int *tetri, int x, int y, char c);
-int		valid_placement(char **board, int *shape, int x, int y);
+int		valid_placement(char **board, int *shape, int x, int y, int len);
+
+void	delete_board(char ***board);
+char	**generate_board(int dimension);
 
 #endif
