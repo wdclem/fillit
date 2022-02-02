@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 09:57:46 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/31 16:34:30 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/02 17:04:04 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 	fd = open(argv[1], O_RDONLY);
 	count = check_valid_board(fd);
 	check_pieces(fd, count, tetri, argv[1]);
-	double dimension = sqrt(count * 4);
+	double dimension = sqrt(count * 4) + 1;
 	while (!solver(board, tetri, count, 0))
 	{
 		printf("%f	", dimension);
