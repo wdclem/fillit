@@ -6,13 +6,13 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:49:53 by thule             #+#    #+#             */
-/*   Updated: 2022/01/26 12:19:54 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/03 13:19:26 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	shift_piece(int *coordinate)
+static void	shift_piece(int *coordinate)
 {
 	int	x;
 	int	y;
@@ -40,7 +40,7 @@ void	shift_piece(int *coordinate)
 	}
 }
 
-void	make_piece(char *piece, int *coordinate)
+static void	make_piece(char *piece, int *coordinate)
 {
 	int	index;
 	int	pos;
@@ -66,7 +66,7 @@ void	make_piece(char *piece, int *coordinate)
 	shift_piece(coordinate);
 }
 
-int	check_piece(char *piece)
+static int	check_piece(char *piece)
 {
 	int index;
 	int counter; //either 6 or 8

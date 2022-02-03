@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:28 by thule             #+#    #+#             */
-/*   Updated: 2022/01/27 14:33:33 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/03 15:55:48 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,29 @@
 # include "libft/libft.h"
 # include "stdio.h" //rmb to delete
 
-int		solver(char **board, int shape[][8], int amount, int index);
+typedef struct s_board
+{
+	char **board;
+	int amount;
+	int len;
+	int x;
+	int y;
+}				t_board;
+
+//solver.c
+int	solver(char **board, int shape[][8], int amount, int index);
+
+//helpers.c
 void	draw_board(char **board);
-void	remove_from_board(char **board, int *shape, int x, int y);
-void	place_on_board(char **board, int *shape, int x, int y, char c);
-int		valid_placement(char **board, int *shape, int x, int y);
+void	removal(char **board, int *shape, int x, int y);
+void	placement(char **board, int *shape, int arr[2], char c);
+int		valid_placement(char **board, int *shape, int arr[2], char c);
+int		get_intial_dimension(int amount);
 
+//check_tetriminos.c
 int	read_board(int fd, int arr[26][8]);
-int	check_piece(char *piece);
 
+//board.c
 void	delete_board(char ***board);
 char	**generate_board(int dimension);
 

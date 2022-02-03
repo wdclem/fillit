@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:29:22 by thle              #+#    #+#             */
-/*   Updated: 2022/01/26 11:56:45 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/03 15:15:04 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_board(char **board)
 	printf("\n");
 }
 
-void	remove_from_board(char **board, int *shape, int x, int y)
+void	removal(char **board, int *shape, int x, int y)
 {
 	int	index;
 
@@ -37,34 +37,49 @@ void	remove_from_board(char **board, int *shape, int x, int y)
 	}
 }
 
-void	place_on_board(char **board, int *shape, int x, int y, char c)
+void	placement(char **board, int *shape, int arr[2], char c)
 {
 	int	index;
 
 	index = 0;
 	while (index < 8)
 	{
-		board[shape[index] + x][shape[index + 1] + y] = c;
+		board[shape[index] + arr[0]][shape[index + 1] + arr[1]] = c;
 		index = index + 2;
 	}
 }
 
-int	valid_placement(char **board, int *shape, int x, int y)
+int	valid_placement(char **board, int *shape, int arr[2], char c)
 {
 	int	index;
 	int	pos_x;
 	int	pos_y;
+	int	len;
 
+	len = ft_strlen(*board);
 	index = 0;
 	pos_x = 0;
 	pos_y = 0;
 	while (index < 8)
 	{
-		pos_x = shape[index] + x;
-		pos_y = shape[index + 1] + y;
-		if (pos_x >= ft_strlen(*board) || pos_y >= ft_strlen(*board) || board[pos_x][pos_y] != '.')
+		pos_x = shape[index] + arr[0];
+		pos_y = shape[index + 1] + arr[1];
+		if (pos_x >= len || pos_y >= len|| board[pos_x][pos_y] != '.')
 			return (0);
 		index = index + 2;
 	}
+	placement(board, shape, arr, c);
 	return (1);
+}
+
+int get_intial_dimension(int amount)
+{
+	int dimension;
+
+	dimension = 2;
+	while (dimension * dimension < amount * 4)
+	{
+		dimension++;
+	}
+	return dimension;
 }
