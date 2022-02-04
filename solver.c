@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 11:17:02 by ccariou           #+#    #+#             */
-/*   Updated: 2022/01/31 18:40:04 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/04 14:41:59 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	solver(char **board, int tetri[][8], int amount, int index)
 			y = 0;
 			while (y < len) 
 			{
-				int res = valid_placement(board, tetri[index], x, y, len);
+				int res = valid_placement(board, tetri[index], x, y);
 				if (!res && x == len - 1 && y == len - 1)
 					return (0);
 				if (res)

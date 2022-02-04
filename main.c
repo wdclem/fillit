@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 09:57:46 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/02 17:04:04 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/04 13:00:22 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@
 #define MAGENTA "\x1B[35m"
 #define CYAN "\x1B[36m"
 #define WHITE "\x1B[37m"
+int	min_dimension(int count)
+{
+	int	dimension;
+
+	dimension = 2;
+	while (dimension * dimension < count * 4)
+	{
+		dimension++;
+	}
+	printf("min_dimension > %d\n", dimension);
+	return(dimension);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +42,7 @@ int main(int argc, char *argv[])
 	int		count;
 	int		tetri[26][8];
 	char	**board;
+	double	sqr;
 
 	board = NULL;
 	if (argc != 2)
@@ -37,12 +51,13 @@ int main(int argc, char *argv[])
 		return (0);
 	}
 	fd = open(argv[1], O_RDONLY);
-	count = check_valid_board(fd);
-	check_pieces(fd, count, tetri, argv[1]);
-	double dimension = sqrt(count * 4) + 1;
+	count = read_board(fd, tetri);
+	int dimension = min_dimension(count);
+	sqr = sqrt(count * 4);
+	printf("sqrt = %f\n", sqr);
 	while (!solver(board, tetri, count, 0))
 	{
-		printf("%f	", dimension);
+		printf("%d\n", dimension);
 		if (board)
 			delete_board(&board);
 		board = generate_board(dimension);

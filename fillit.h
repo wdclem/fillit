@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:28 by thule             #+#    #+#             */
-/*   Updated: 2022/01/31 18:36:22 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/04 14:42:24 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 
 # include <stdio.h> /* TO DELETE */
 
-int		check_valid_board(int fd);
-void	check_pieces(int fd, int count, int tetri[count][8], char *argv);
+//int		check_valid_board(int fd);
+//void	check_pieces(int fd, int count, int tetri[count][8], char *argv);
+int		read_board(int fd, int arr[26][8]);
 
 int		solver(char **board, int tetri[][8], int count, int index);
 
@@ -30,7 +31,7 @@ void	coordinate(char **piece, int *tetri);
 void	draw_board(char **board);
 void	remove_from_board(char **board, int *tetri, int x, int y);
 void	place_on_board(char **board, int *tetri, int x, int y, char c);
-int		valid_placement(char **board, int *shape, int x, int y, int len);
+int		valid_placement(char **board, int *shape, int x, int y);
 
 void	delete_board(char ***board);
 char	**generate_board(int dimension);
