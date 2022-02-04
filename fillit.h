@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:42:28 by thule             #+#    #+#             */
-/*   Updated: 2022/02/03 15:55:48 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/04 13:06:03 by thle             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_board
 }				t_board;
 
 //solver.c
-int	solver(char **board, int shape[][8], int amount, int index);
+int	solver(char **board, int shape[][8], int arr[2], int index);
 
 //helpers.c
 void	draw_board(char **board);

@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:29:22 by thle              #+#    #+#             */
-/*   Updated: 2022/02/03 15:15:04 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/04 13:18:25 by thle             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-//this func needs rewriting since it used printf()
 void	draw_board(char **board)
 {
-	int index = 0;
+	int	index;
 
+	index = 0;
 	while (board[index])
 	{
-		printf("%s\n", board[index]);
+		ft_putstr(board[index]);
+		ft_putchar('\n');
 		index++;
 	}
-	printf("\n");
 }
 
 void	removal(char **board, int *shape, int x, int y)
@@ -64,7 +64,7 @@ int	valid_placement(char **board, int *shape, int arr[2], char c)
 	{
 		pos_x = shape[index] + arr[0];
 		pos_y = shape[index + 1] + arr[1];
-		if (pos_x >= len || pos_y >= len|| board[pos_x][pos_y] != '.')
+		if (pos_x >= len || pos_y >= len || board[pos_x][pos_y] != '.')
 			return (0);
 		index = index + 2;
 	}
@@ -72,14 +72,14 @@ int	valid_placement(char **board, int *shape, int arr[2], char c)
 	return (1);
 }
 
-int get_intial_dimension(int amount)
+int	get_intial_dimension(int amount)
 {
-	int dimension;
+	int	dimension;
 
 	dimension = 2;
 	while (dimension * dimension < amount * 4)
 	{
 		dimension++;
 	}
-	return dimension;
+	return (dimension);
 }
