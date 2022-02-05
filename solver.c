@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:30:27 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/04 16:30:08 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:53:27 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "fillit.h"
 
-void	remove_tetri(char **board, int *shape, int x, int y)
+static void	remove_tetri(char **board, int *shape, int x, int y)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	remove_tetri(char **board, int *shape, int x, int y)
 	}
 }
 
-void	place_tetri(char **board, int *shape, int arr[2], char c)
+static void	place_tetri(char **board, int *shape, int arr[2], char c)
 {
 	int	i;
 
@@ -36,14 +36,13 @@ void	place_tetri(char **board, int *shape, int arr[2], char c)
 	}
 }
 
-int	valid_placement(char **board, int *shape, int arr[2], char c)
+/* arr[0] = x; arr[1] = y; arr[2] = dimension */
+static int	valid_placement(char **board, int *shape, int arr[3], char c)
 {
 	int	i;
 	int	pos_x;
 	int	pos_y;
-	int	len;
 
-	len = ft_strlen(*board);
 	i = 0;
 	pos_x = 0;
 	pos_y = 0;
@@ -51,7 +50,7 @@ int	valid_placement(char **board, int *shape, int arr[2], char c)
 	{
 		pos_x = shape[i] + arr[0];
 		pos_y = shape[i + 1] + arr[1];
-		if (pos_x >= len || pos_y >= len || board[pos_x][pos_y] != '.')
+		if (pos_x >= arr[2] || pos_y >= arr[2] || board[pos_x][pos_y] != '.')
 			return (0);
 		i = i + 2;
 	}
@@ -71,7 +70,7 @@ static int	recursion(char **board, int tetri[][8], int arr[2], int i)
 		while (y < arr[1])
 		{
 			if (valid_placement(board, tetri[i],
-					(int [2]){x, y}, i + 'A'))
+					(int [3]){x, y, arr[1]}, i + 'A'))
 			{
 				if (solver(board, tetri, arr, i + 1))
 					return (1);
@@ -88,13 +87,13 @@ static int	recursion(char **board, int tetri[][8], int arr[2], int i)
 	return (2);
 }
 
+/* arr[0] = amount; arr[1] = dimension/ length */
 int	solver(char **board, int tetri[][8], int arr[2], int i)
 {
 	int	res;
 
 	if (i == arr[0])
 		return (1);
-	/*arr[2] = ft_strlen(*board);*/
 	while (i < arr[0])
 	{
 		res = recursion(board, tetri, arr, i);
