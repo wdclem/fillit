@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:51:47 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/04 16:29:27 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:59:02 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	make_piece(char *piece, int *coordinate)
 static int	check_piece(char *piece)
 {
 	int	i;
-	int	counter; /*either 6 or 8*/
+	int	counter;
 
 	i = 0;
 	counter = 0;
