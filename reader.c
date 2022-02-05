@@ -6,11 +6,12 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:51:47 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/05 18:59:02 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/05 21:21:45 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include "stdio.h"
 
 static void	shift_piece(int *coordinate)
 {
@@ -106,14 +107,14 @@ int	read_board(int fd, int tetri[26][8])
 	while (ret)
 	{
 		ret = read(fd, buf, 21);
-		if (ret == 0 && i != 0)
-			break ;
 		buf[ret] = '\0';
 		res = check_piece(buf);
-		if ((ret < 20 && i == 0) || i >= 26 || (res != 8 && res != 6))
-			return (0);
+		if (ret < 20 || i > 26 || (res != 8 && res != 6))
+			break ;
 		make_piece(buf, tetri[i]);
+		if (ret == 20)
+			return (++i);
 		i++;
 	}
-	return (i);
+	return (0);
 }
