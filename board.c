@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   board.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:42:33 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/04 16:24:33 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/05 12:16:39 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	delete_board(char ***board)
 	i = 0;
 	while ((*board)[i])
 	{
-		ft_bzero(&((*board)[i]), ft_strlen((*board)[i]));
 		ft_strdel(&((*board)[i]));
 		i++;
 	}
@@ -59,7 +58,7 @@ char	**generate_board(int dimension)
 	int		i;
 
 	i = 0;
-	template = ".................................................";
+	template = "...................";
 	board = (char **) malloc(sizeof(char *) * (dimension + 1));
 	while (i < dimension)
 	{
