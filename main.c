@@ -3,60 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:24:10 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/04 17:35:04 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:37:50 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int	check_file(int argc, char argv[1], int tetri[][8])
+static int	make_board(int fd)
 {
-	int	fd;
-	int	amount;
+	int		tetri[26][8];
+	char	**board;
+	int		amount;
+	int		dimension;
 
-	if(argc != 2)
-	{
-		ft_putstr("usage: ./fillit filename\n");
-		return(0);
-	}
-	fd = open(&argv[1], O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr("error\n");
-		return (1);
-	}
+	board = NULL;
 	amount = read_board(fd, tetri);
 	if (!amount)
+		return (0);
+	dimension = get_intial_dimension(amount);
+	board = generate_board(dimension);
+	if (!board)
+		return (0);
+	while (!solver(board, tetri, (int [2]){amount, dimension}, 0))
 	{
-		ft_putstr("error\n");
-		return (1);
+		dimension++;
+		if (board)
+			delete_board(&board);
+		board = generate_board(dimension);
 	}
-	close(fd);
-	return (amount);
+	draw_board(board);
+	delete_board(&board);
+	return (1);
 }
 
 int	main(int argc, char *argv[])
 {
-	int		amount;
-	int		dimension;
-	int		tetri[26][8];
-	char	**board;
+	int	fd;
 
-	board = NULL;
-	amount = check_file(argc, argv[1], tetri);
-	dimension = get_intial_dimension(amount);
-	board = generate_board(dimension++);
-	while (!solver(board, tetri, (int[2]){amount, dimension}, 0))
+	if (argc != 2)
 	{
-		if (board)
-			delete_board(&board);
-		board = generate_board(dimension);
-		dimension++;
+		ft_putstr("usage: ./fillit filename\n");
+		return (0);
 	}
-	draw_board(board);
-	delete_board(&board);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+	{
+		ft_putstr("error\n");
+		return (0);
+	}
+	if (!make_board(fd))
+		ft_putstr("error\n");
+	close(fd);
 	return (0);
 }
