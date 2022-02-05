@@ -6,7 +6,7 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:42:33 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/05 12:16:39 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/05 18:33:59 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,16 @@ void	delete_board(char ***board)
 	int	i;
 
 	i = 0;
-	while ((*board)[i])
+	if (*board)
 	{
-		ft_strdel(&((*board)[i]));
-		i++;
-	}
-	free(*board);
+		while ((*board)[i])
+		{
+			ft_strdel(&((*board)[i]));
+			i++;
+		}
+		free(*board);
 	*board = NULL;
+	}
 }
 
 char	**generate_board(int dimension)
@@ -58,13 +61,17 @@ char	**generate_board(int dimension)
 	int		i;
 
 	i = 0;
-	template = "...................";
+	template = ".................";
 	board = (char **) malloc(sizeof(char *) * (dimension + 1));
-	while (i < dimension)
+	if (board)
 	{
-		board[i] = ft_strsub(template, 0, dimension);
-		i++;
+		while (i < dimension)
+		{
+			board[i] = ft_strsub(template, 0, dimension);
+			i++;
+		}
+		board[i] = NULL;
+		return (board);
 	}
-	board[i] = NULL;
-	return (board);
+	return (0);
 }
