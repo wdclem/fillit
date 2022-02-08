@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:51:47 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/07 17:01:54 by thle             ###   ########.fr       */
+/*   Updated: 2022/02/08 16:03:31 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	check_piece(char *piece)
 {
 	int	i;
 	int	counter;
-	int hashtag;
+	int	hashtag;
 
 	i = 0;
 	counter = 0;

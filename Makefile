@@ -1,37 +1,43 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: thle <thle@student.42.fr>                  +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/01/12 17:42:19 by thule             #+#    #+#              #
-#    Updated: 2022/02/07 17:11:09 by thle             ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# # **************************************************************************** #
+# #                                                                              #
+# #                                                         :::      ::::::::    #
+# #    Makefile                                           :+:      :+:    :+:    #
+# #                                                     +:+ +:+         +:+      #
+# #    By: thule <thule@student.42.fr>                +#+  +:+       +#+         #
+# #                                                 +#+#+#+#+#+   +#+            #
+# #    Created: 2022/01/12 17:42:19 by thule             #+#    #+#              #
+# #    Updated: 2022/02/08 15:01:36 by thule            ###   ########.fr        #
+# #                                                                              #
+# # **************************************************************************** #
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
 NAME = fillit
 FILES = main.c reader.c solver.c board.c
-OBJS = *.o
+INCLUDE = fillit.h
+LIB = libft/libft.a
+OBJ = $(FILES:%.c=%.o)
 
-#.PHONY: all $(NAME) clean fclean re
-#.SILENT: all $(NAME) clean fclean re
+.PHONY: all clean fclean re
+.SILENT: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(FILES)
-	$(MAKE) -C ./libft
-	$(CC) -o $(NAME) $(FLAGS) $(FILES) -Ilibft -Llibft -lft
+$(NAME): $(LIB) $(OBJ)
+	$(CC) -o $(NAME) $(FLAGS) $(OBJ) $(LIB)
+
+$(LIB): $(wildcard libft/*.o)
+	$(MAKE) -sC ./libft
+
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	/bin/rm -f $(OBJS)
-	$(MAKE) -C ./libft clean
+	$(MAKE) -sC ./libft clean
+	/bin/rm -f $(OBJ)
 
 fclean: clean
+	$(MAKE) -sC ./libft fclean
 	/bin/rm -f $(NAME)
-	$(MAKE) -C ./libft fclean
 
 re: fclean all
-	$(MAKE) -C ./libft re
