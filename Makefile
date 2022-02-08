@@ -6,12 +6,12 @@
 #    By: thule <thule@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 17:42:19 by thule             #+#    #+#              #
-#    Updated: 2022/02/08 16:10:27 by thule            ###   ########.fr        #
+#    Updated: 2022/02/08 20:09:11 by thule            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror #rmb to put back in!!!!!
 NAME = fillit
 FILES = main.c reader.c solver.c board.c
 INCLUDE = fillit.h

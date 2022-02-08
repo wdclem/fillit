@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   board.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thle <thle@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:42:33 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/07 17:02:19 by thle             ###   ########.fr       */
+/*   Updated: 2022/02/08 23:06:21 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**generate_board(int dimension)
 	int		i;
 
 	i = 0;
-	template = "....................";
+	template = "...................";
 	board = (char **) malloc(sizeof(char *) * (dimension + 1));
 	if (board)
 	{

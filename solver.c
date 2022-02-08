@@ -6,79 +6,81 @@
 /*   By: thule <thule@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 15:30:27 by ccariou           #+#    #+#             */
-/*   Updated: 2022/02/08 16:02:46 by thule            ###   ########.fr       */
+/*   Updated: 2022/02/08 21:57:27 by thule            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "fillit.h"
 
-static void	remove_tetri(char **board, int *shape, int x, int y)
+static void	place_tetri(t_tetri *tetri, int x, int y, int i)
 {
-	int	i;
+	int		j;
+	char	c;
 
-	i = 0;
-	while (i < 8)
+	j = 0;
+	c = i + 'A';
+	while (j < 8)
 	{
-		board[shape[i] + x][shape[i + 1] + y] = '.';
-		i = i + 2;
+		tetri->board[x + tetri->tetri[i][j]][y + tetri->tetri[i][j + 1]] = c;
+		j = j + 2;
 	}
 }
 
-static void	place_tetri(char **board, int *shape, int arr[2], char c)
+static void	remove_tetri(t_tetri *tetri, int x, int y, int i)
 {
-	int	i;
+	int	j;
 
-	i = 0;
-	while (i < 8)
+	j = 0;
+	while (j < 8)
 	{
-		board[shape[i] + arr[0]][shape[i + 1] + arr[1]] = c;
-		i = i + 2;
+		tetri->board[x + tetri->tetri[i][j]][y + tetri->tetri[i][j + 1]] = '.';
+		j = j + 2;
 	}
 }
 
-/* arr[0] = x; arr[1] = y; arr[2] = dimension */
-static int	valid_placement(char **board, int *shape, int arr[3], char c)
+static int	valid_placment(t_tetri *tetri, int x, int y, int i)
 {
-	int	i;
+	int	j;
 	int	pos_x;
 	int	pos_y;
 
-	i = 0;
+	j = 0;
 	pos_x = 0;
 	pos_y = 0;
-	while (i < 8)
+	while (j < 8)
 	{
-		pos_x = shape[i] + arr[0];
-		pos_y = shape[i + 1] + arr[1];
-		if (pos_x >= arr[2] || pos_y >= arr[2] || board[pos_x][pos_y] != '.')
+		pos_x = tetri->tetri[i][j] + x;
+		pos_y = tetri->tetri[i][j + 1] + y;
+		if (pos_x < 0 || pos_y < 0 || pos_x >= tetri->board_len
+			|| pos_y >= tetri->board_len
+			|| tetri->board[pos_x][pos_y] != '.')
 			return (0);
-		i = i + 2;
+		j = j + 2;
 	}
-	place_tetri(board, shape, arr, c);
+	place_tetri(tetri, x, y, i);
 	return (1);
 }
 
-static int	recursion(char **board, int tetri[][8], int arr[2], int i)
+static int	recursion(t_tetri *tetri, int i)
 {
 	int	x;
 	int	y;
 
 	x = 0;
-	while (x < arr[1])
+	while (x < tetri->board_len)
 	{
 		y = 0;
-		while (y < arr[1])
+		while (y < tetri->board_len)
 		{
-			if (valid_placement(board, tetri[i],
-					(int [3]){x, y, arr[1]}, i + 'A'))
+			if (valid_placment(tetri, x, y, i))
 			{
-				if (solver(board, tetri, arr, i + 1))
+				if (solver(tetri, i + 1))
 					return (1);
 				else
-					remove_tetri(board, tetri[i], x, y);
+					remove_tetri(tetri, x, y, i);
 			}
 			else
-				if (x == arr[1] - 1 && y == arr[1] - 1)
+				if (x == tetri->board_len - 1 && y == tetri->board_len - 1)
 					return (0);
 			y++;
 		}
@@ -87,16 +89,18 @@ static int	recursion(char **board, int tetri[][8], int arr[2], int i)
 	return (2);
 }
 
-/* arr[0] = amount; arr[1] = dimension/ length */
-int	solver(char **board, int tetri[][8], int arr[2], int i)
+int	solver(t_tetri *tetri, int i)
 {
 	int	res;
 
-	if (i == arr[0])
+	res = 0;
+	if (!(tetri->board))
+		return (0);
+	if (i == tetri->amount)
 		return (1);
-	while (i < arr[0])
+	while (i < tetri->amount)
 	{
-		res = recursion(board, tetri, arr, i);
+		res = recursion(tetri, i);
 		if (res == 0 || res == 1)
 			return (res);
 		i++;
